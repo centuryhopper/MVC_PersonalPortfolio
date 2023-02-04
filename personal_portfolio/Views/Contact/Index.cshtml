@@ -1,0 +1,58 @@
+
+@using Personal_Portfolio.Models
+@model ContactMeModel
+@{
+    @* System.Console.WriteLine("Contacts Page"); *@
+
+    ViewData["Title"] = "Contact Me";
+
+}
+
+<h1>Contact me here</h1>
+
+<div class="text-center">
+    <p>
+    I am excited to meet and work with you! We progress better together so please don't hesitate to contact me using the form below.
+    </p>
+</div>
+
+<div>
+    @using(Html.BeginForm("Index", "Contact", FormMethod.Post))
+    {
+        <div class="row mb-3 w-75 mx-auto">
+            <div class="col-6">
+                <label for="input1" class="form-label">Name</label>
+                @Html.TextBoxFor(m => m.name, new { @class = "form-control", id = "input1", placeholder = "Name" })
+                @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-6">
+                <label for="input2" class="form-label">Email</label>
+                @Html.TextBoxFor(m => m.email, new { @class = "form-control", id = "input2", aria_describedby = "emailHelp", placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-outline mb-3 w-75 mx-auto">
+            <label for="input3" class="form-label">Subject</label>
+            @Html.TextBoxFor(m => m.subject, new { @class = "form-control", id = "input3", placeholder = "Subject" })
+            @Html.ValidationMessageFor(m => m.subject, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-outline mb-5 w-75 mx-auto">
+            <label class="form-label" for="textAreaContact">Message</label>
+            @Html.TextAreaFor(m => m.message, new { @class = "form-control", id = "textAreaContact", rows = 7, placeholder = "Message" })
+            @Html.ValidationMessageFor(m => m.message, "", new { @class = "text-danger" })
+        </div>
+        <div class="w-75 mx-auto">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    }
+</div>
+
+@* @if (Model.postedMessage is not null)
+{
+    <div class="alert alert-info">@Model.postedMessage</div>
+} *@
+
+@* allow for client-side validation *@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

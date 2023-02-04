@@ -1,0 +1,37 @@
+
+@{
+    ViewData["Title"] = "Skills";
+}
+
+<h2>Programming Languages</h2>
+<hr />
+<ul>
+    @foreach (var programmingLanguage in Model.programmingLanguages)
+    {
+        <li>@programmingLanguage</li>
+    }
+</ul>
+<h2 class="skillsSubHeader">Technology & Frameworks I Use</h2>
+<hr />
+<ul>
+    @foreach (var t in Model.techs)
+    {
+        <li>@t</li>
+    }
+</ul>
+<h2 class="skillsSubHeader">Python Libraries I Use</h2>
+<hr />
+<ul>
+    @foreach (var pl in Model.pythonLibraries)
+    {
+        <li>@pl</li>
+    }
+</ul>
+<h2 class="skillsSubHeader">The Linux Distribution That I Use & The Tools That I Frequently Work With</h2>
+<hr />
+<ul>
+    @foreach (var lt in Model.linuxTools)
+    {
+        <li>@lt</li>
+    }
+</ul>

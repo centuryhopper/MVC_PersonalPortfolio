@@ -1,0 +1,67 @@
+@using Personal_Portfolio.Models
+@model IEnumerable<ProjectCardModel>
+@{
+}
+
+<div class="container">
+    <div class="row pt-5">
+        <div class="text-center col-12">
+            <h3 class="text-uppercase border-bottom mb-4">List of projects</h3>
+        </div>
+    </div>
+
+    @using(Html.BeginForm("Index","Projects", FormMethod.Get)) {
+
+        <div class="input-group">
+            <label for="txtSearch" class="form-label">Search by title</label>
+            <input type="text" class="form-control" id="txtSearch" placeholder="Search project by title"/>
+            @* @Html.TextBox("searchTerm") *@
+
+            @* <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div> *@
+        </div>
+
+    }
+
+    <div id="projects"></div>
+
+    @section Scripts
+    {
+        <script>
+            //$('#projects').load('Projects/SearchUsers')
+
+            /*
+            $(() => {}) is a shorthand for $(document).ready(function () {})
+
+            The function inside the $(() => {}) block is executed only after the DOM has fully loaded, ensuring that all elements in the page are available for manipulation. This is important because if you try to access or modify an element in the DOM before it has fully loaded, you may get an error or unexpected behavior.
+            */
+
+            $(() => {
+                getUsers()
+
+                // console.log('hi there from jquery')
+
+                // responsive filtering from this code snippet
+                $('#txtSearch').on('keyup', () => {
+                    getUsers()
+                })
+            })
+
+            var getUsers = () => {
+                $.ajax({
+                    url: '@Url.Action("SearchUsers", "Projects")',
+                    datatype: 'html',
+                    method: 'GET',
+                    data: {searchTerm: $('#txtSearch').val()},
+                    success: (res) => {
+                        $('#projects').html('').html(res)
+                    },
+                    error: (err) => {
+                        console.log(err)
+                    }
+                })
+            }
+        </script>
+    }
+

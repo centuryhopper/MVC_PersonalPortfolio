@@ -1,0 +1,21 @@
+@using Personal_Portfolio.Models
+@model IEnumerable<ProjectCardModel>
+<div class="row g-3">
+    @foreach (var info in Model)
+    {
+        <div class="col-12 col-md-6 col-lg-6 col-sm-6">
+            <div class="card">
+                <img src="@info.imgUrl" class="card-img-top" alt="Card Image" />
+                <div class="card-body">
+                    <h5 class="card-title text-center">@info.title</h5>
+                    <p class="card-text mb-4">@info.description</p>
+                    <div class="text-center">
+                        <a class="card-link btn btn-primary" target="_blank" rel="noopener noreferrer" href="@info.gameLink">Link to game
+                        </a>
+                        <a class="card-link btn btn-primary" target="_blank" rel="noopener noreferrer" href="@info.sourceCodeLink">Source code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

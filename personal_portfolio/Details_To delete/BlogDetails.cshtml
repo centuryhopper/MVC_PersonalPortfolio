@@ -1,0 +1,9 @@
+﻿@* @page "{routeName?}"
+@model Personal_Portfolio_Razor.Pages.BlogDetailsModel
+@{
+}
+
+@await Component.InvokeAsync("BlogDetails", new {routeName = Model.routeName})
+
+
+ *@

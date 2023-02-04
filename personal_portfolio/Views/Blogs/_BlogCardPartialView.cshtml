@@ -1,0 +1,19 @@
+@using Personal_Portfolio.Models
+@model IEnumerable<BlogModel>
+
+@foreach (var blog in Model)
+{
+    <div class="card mx-auto mt-3 w-75">
+        <div class="card-body">
+
+            @* <a asp-page="./Details/BlogDetails" asp-route-routeName="@blog.routeName" class="card-link">
+                @blog.title
+            </a> *@
+
+            @Html.ActionLink(blog.title, "BlogDetails", "Blogs", new {blogTitle=blog.title}, null)
+
+            <h5 class="card-title">@blog.date.ToString("MM-dd-yyyy")</h5>
+            <p class="card-text">@blog.previewDesc</p>
+        </div>
+    </div>
+}
