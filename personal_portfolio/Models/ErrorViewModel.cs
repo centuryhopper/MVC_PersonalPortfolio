@@ -1,4 +1,4 @@
-namespace personal_portfolio.Models;
+namespace Personal_Portfolio.Models;
 
 public class ErrorViewModel
 {

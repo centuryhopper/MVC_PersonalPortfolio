@@ -2,11 +2,13 @@
 @using Personal_Portfolio.Models
 @model ContactMeModel
 @{
-    @* System.Console.WriteLine("Contacts Page"); *@
-
     ViewData["Title"] = "Contact Me";
-
 }
+
+<head>
+    <link href="~/css/custom_styles.css" rel="stylesheet" />
+</head>
+
 
 <h1>Contact me here</h1>
 
@@ -17,42 +19,47 @@
 </div>
 
 <div>
-    @using(Html.BeginForm("Index", "Contact", FormMethod.Post))
+    @using(Html.BeginForm("SaveContact", "Contact", FormMethod.Post, new {@id = "contactForm"}))
     {
+        @* @Html.AntiForgeryToken() *@
         <div class="row mb-3 w-75 mx-auto">
             <div class="col-6">
-                <label for="input1" class="form-label">Name</label>
+                @Html.LabelFor(m => m.name, new {@class="form-label"})
                 @Html.TextBoxFor(m => m.name, new { @class = "form-control", id = "input1", placeholder = "Name" })
                 @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
             </div>
             <div class="col-6">
-                <label for="input2" class="form-label">Email</label>
+                @Html.LabelFor(m => m.email, new {@class="form-label"})
                 @Html.TextBoxFor(m => m.email, new { @class = "form-control", id = "input2", aria_describedby = "emailHelp", placeholder = "Email" })
                 @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-outline mb-3 w-75 mx-auto">
-            <label for="input3" class="form-label">Subject</label>
+            @Html.LabelFor(m => m.subject, new {@class="form-label"})
             @Html.TextBoxFor(m => m.subject, new { @class = "form-control", id = "input3", placeholder = "Subject" })
             @Html.ValidationMessageFor(m => m.subject, "", new { @class = "text-danger" })
         </div>
         <div class="form-outline mb-5 w-75 mx-auto">
-            <label class="form-label" for="textAreaContact">Message</label>
-            @Html.TextAreaFor(m => m.message, new { @class = "form-control", id = "textAreaContact", rows = 7, placeholder = "Message" })
+            @Html.LabelFor(m => m.message, new {@class="form-label"})
+            @Html.TextAreaFor(m => m.message, new { @class = "form-control", id = "input4", rows = 7, placeholder = "Message", minLength=100 })
             @Html.ValidationMessageFor(m => m.message, "", new { @class = "text-danger" })
         </div>
         <div class="w-75 mx-auto">
-            <input type="submit" value="Submit" class="btn btn-primary" />
+            <input id="submitButton" type="submit" value="Submit" class="btn btn-primary" onclick="avoidUserSpam(30)"/>
+
         </div>
     }
 </div>
 
-@* @if (Model.postedMessage is not null)
+@if (TempData["message"] is not null)
 {
-    <div class="alert alert-info">@Model.postedMessage</div>
-} *@
+    <div class="alert alert-info">@TempData["message"]</div>
+}
 
 @* allow for client-side validation *@
 @section Scripts {
+
+    <script src="~/js/form_handling.js"></script>
+    @* must be placed after your custom jquery for this to work *@
     <partial name="_ValidationScriptsPartial" />
 }

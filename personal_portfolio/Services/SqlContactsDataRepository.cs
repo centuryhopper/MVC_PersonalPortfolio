@@ -17,9 +17,9 @@ public class SqlContactsDataRepository : IContactsDataRepository<ContactMeModel>
         this.logger = logger;
     }
 
-    public int Commit()
+    public Task<int> Commit()
     {
-        return db.SaveChanges();
+        return db.SaveChangesAsync();
     }
 
     public ContactMeModel? Delete(int id)
@@ -59,11 +59,18 @@ public class SqlContactsDataRepository : IContactsDataRepository<ContactMeModel>
         return query;
     }
 
-    public ContactMeModel PostData(ContactMeModel model)
+    public async Task<IResult> PostDataAsync(ContactMeModel model)
     {
-        db.Add(model);
-        Commit();
-        return model;
+        try
+        {
+            await db.AddAsync(model);
+            await Commit();
+            return Results.Ok(model);
+        }
+        catch (System.Exception e)
+        {
+            return Results.BadRequest(e.Message);
+        }
     }
 
     public ContactMeModel Update(ContactMeModel model)

@@ -1,23 +1,34 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using personal_portfolio.Models;
 using Personal_Portfolio.Models;
-
+using Personal_Portfolio.Services;
 
 namespace Personal_Portfolio.Controllers;
 
 public class ContactController : Controller
 {
-    private readonly ILogger<ContactController> _logger;
+    private readonly ILogger<ContactController> logger;
+    private readonly IContactsDataRepository<ContactMeModel> dataRepo;
 
-    public ContactController(ILogger<ContactController> logger)
+    public ContactController(ILogger<ContactController> logger, IContactsDataRepository<ContactMeModel> dataRepo)
     {
-        _logger = logger;
+        this.logger = logger;
+        this.dataRepo = dataRepo;
     }
 
     public IActionResult Index()
     {
+        // logger.LogInformation($"{model}");
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SaveContact(ContactMeModel model)
+    {
+        logger.LogInformation($"{model}");
+        TempData["message"] = "Thank you! Your message has been sent!";
+        await this.dataRepo.PostDataAsync(model);
+        return RedirectToAction("Index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
