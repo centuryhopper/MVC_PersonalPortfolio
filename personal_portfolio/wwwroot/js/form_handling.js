@@ -1,32 +1,56 @@
-
 $(() => {
     clientValidation()
 
     $("#contactForm").submit((event) => {
-        event.preventDefault();
+        event.preventDefault()
         // Your custom form submission logic goes here
-    });
+    })
 })
 
-var avoidUserSpam = (seconds) =>
+
+const avoidUserSpam = (seconds) =>
 {
+    //#region disable the button
     var button = document.getElementById('submitButton')
-    var oldValue = button.value;
-    let milliseconds = seconds * 1000
+    var oldValue = button.value
+    button.setAttribute('disabled', true)
+    //#endregion
 
-    setTimeout(() => {
-        button.setAttribute('disabled', true);
-        button.value = `Wait ${seconds} sec`;
-        console.log('calling avoidUserSpam');
-    }, 0);
+    //#region show the wait time
+    // Set tomorrow as the we're counting down to
+    var today = new Date()
+    var tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
 
-    setTimeout(() => {
-        button.value = oldValue;
-        button.removeAttribute('disabled');
-    }, milliseconds);
+    // Update the count down every 1 second
+    const interval = setInterval(() =>
+    {
+        // Get todays date and time
+        var now = new Date().getTime()
+
+        // Find the distance between now and the count down date
+        var distance = tomorrow - now
+
+        // Time calculations for days, hours, minutes and seconds
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000 / 2)
+
+        // Display the result in the element with id="timer"
+        button.value = 'Wait ' + seconds + "s "
+
+        // console.log(button.value)
+
+        // If the count down is finished, write some text
+        if (seconds <= 0)
+        {
+            clearInterval(interval)
+            button.value = oldValue
+            button.removeAttribute('disabled')
+        }
+    }, 1000)
+    //#endregion
 }
 
-var clientValidation = () => {
+const clientValidation = () => {
     $('#contactForm').validate({
         rules: {
             name: {
