@@ -1,22 +1,22 @@
 @using Personal_Portfolio.Models
 @model IEnumerable<BlogModel>
 
+
 <div class="text-center">
     <h2>All Blogs</h2>
 </div>
 <hr/>
 <div class="text-center">
-    <a class="btn btn-primary" >Sort by newest</a>
+    @Html.ActionLink($"Sort by {ViewBag.SortBy}", "Index", "Blogs", new {isNewest=ViewBag.SortBy}, new {@class="btn btn-primary"})
 </div>
 
 @* here we render the blogs list *@
-<div id="blogs"></div>
-@section Scripts
-{
-    <script>
-        // load the partial view result in the div with id of 'blogs'
-        $('#blogs').load('/Blogs/BlogsListPartial')
-    </script>
-}
+@* <div id="blogs"></div> *@
+
+<partial name="_BlogCardPartialView" model="Model"/>
+
+
+
+
 
 
