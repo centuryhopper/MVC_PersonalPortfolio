@@ -1,53 +1,43 @@
 $(() => {
     clientValidation()
 
-    $("#contactForm").submit((event) => {
-        event.preventDefault()
-        // Your custom form submission logic goes here
-    })
+    // definitely dont want to preventdefault for a form submission! I commented this out after finding out this is why the form information wasn't submitting!
+    // $("#contactForm").submit((event) => {
+    //     event.preventDefault()
+    //     // Your custom form submission logic goes here
+    // })
 })
 
 
 const avoidUserSpam = (seconds) =>
 {
+    if (Number.isNaN(seconds) || seconds <= 0 || seconds === undefined)
+    {
+        console.error("you need to pass in a positive integer when calling avoidUserSpam()")
+        return
+    }
     //#region disable the button
     var button = document.getElementById('submitButton')
     var oldValue = button.value
     button.setAttribute('disabled', true)
     //#endregion
 
-    //#region show the wait time
-    // Set tomorrow as the we're counting down to
-    var today = new Date()
-    var tomorrow = new Date(today)
-    tomorrow.setDate(tomorrow.getDate() + 1)
+    var num = seconds
 
     // Update the count down every 1 second
     const interval = setInterval(() =>
     {
-        // Get todays date and time
-        var now = new Date().getTime()
+        button.value = 'Wait ' + num-- + "s "
 
-        // Find the distance between now and the count down date
-        var distance = tomorrow - now
-
-        // Time calculations for days, hours, minutes and seconds
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000 / 2)
-
-        // Display the result in the element with id="timer"
-        button.value = 'Wait ' + seconds + "s "
-
-        // console.log(button.value)
 
         // If the count down is finished, write some text
-        if (seconds <= 0)
+        if (num <= 0)
         {
             clearInterval(interval)
             button.value = oldValue
             button.removeAttribute('disabled')
         }
     }, 1000)
-    //#endregion
 }
 
 const clientValidation = () => {
@@ -85,3 +75,4 @@ const clientValidation = () => {
         }
     })
 }
+

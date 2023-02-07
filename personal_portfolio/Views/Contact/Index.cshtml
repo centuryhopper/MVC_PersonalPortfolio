@@ -21,7 +21,7 @@
 <div>
     @using(Html.BeginForm("SaveContact", "Contact", FormMethod.Post, new {@id = "contactForm"}))
     {
-        @* @Html.AntiForgeryToken() *@
+        @Html.AntiForgeryToken()
         <div class="row mb-3 w-75 mx-auto">
             <div class="col-6">
                 @Html.LabelFor(m => m.name, new {@class="form-label"})
@@ -45,12 +45,10 @@
             @Html.ValidationMessageFor(m => m.message, "", new { @class = "text-danger" })
         </div>
         <div class="w-75 mx-auto">
-            <input id="submitButton" type="submit" value="Submit" class="btn btn-primary" onclick="avoidUserSpam(30)"/>
+            <input id="submitButton" type="submit" value="Submit" class="btn btn-primary" />
         </div>
     }
 </div>
-<span id="timer"></span>
-
 
 @if (TempData["message"] is not null)
 {

@@ -18,14 +18,13 @@ public class ContactController : Controller
 
     public IActionResult Index()
     {
-        // logger.LogInformation($"{model}");
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> SaveContact(ContactMeModel model)
+    public async Task<ActionResult> SaveContact(ContactMeModel model)
     {
-        logger.LogInformation($"{model}");
+        logger.LogWarning($"{model}");
         TempData["message"] = "Thank you! Your message has been sent!";
         await this.dataRepo.PostDataAsync(model);
         return RedirectToAction("Index");
